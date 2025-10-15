@@ -9,7 +9,9 @@ const props = withDefaults(defineProps<DrawerRootProps>(), {
 
 const emits = defineEmits<DrawerRootEmits>()
 
-const forwarded = useForwardPropsEmits(props, emits)
+// useForwardPropsEmits returns a Record-like object which may not be a simple
+// object type; cast to any to satisfy the template spread typing.
+const forwarded = useForwardPropsEmits(props, emits) as any
 </script>
 
 <template>

@@ -14,7 +14,7 @@ const emits = defineEmits<{
   'update:items': [payload: BulletLegendItemInterface[]]
 }>()
 
-const elRef = ref<HTMLElement>()
+const elRef = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   const selector = `.${BulletLegend.selectors.item}`
@@ -27,8 +27,8 @@ onMounted(() => {
 
 function onLegendItemClick(d: BulletLegendItemInterface, i: number) {
   emits('legendItemClick', d, i)
-  const isBulletActive = !props.items[i].inactive
-  const isFilterApplied = props.items.some(i => i.inactive)
+  const isBulletActive = !(props.items[i]?.inactive ?? false)
+  const isFilterApplied = props.items.some(item => item.inactive)
   if (isFilterApplied && isBulletActive) {
     // reset filter
     emits('update:items', props.items.map(item => ({ ...item, inactive: false })))

@@ -18,39 +18,40 @@ const props = withDefaults(defineProps<{
 // Use weakmap to store reference to each datapoint for Tooltip
 const wm = new WeakMap()
 function template(d: any, i: number, elements: (HTMLElement | SVGElement)[]) {
-  if (props.index in d) {
-    if (wm.has(d)) {
+  // Prefer using the provided index field if present on the data object
+  const hasIndexOnD = typeof props.index === 'string' && d && Object.prototype.hasOwnProperty.call(d, props.index)
+
+  if (hasIndexOnD) {
+    if (wm.has(d))
       return wm.get(d)
-    }
-    else {
-      const componentDiv = document.createElement('div')
-      const omittedData = Object.entries(omit(d, [props.index])).map(([key, value]) => {
-        const legendReference = props.items?.find(i => i.name === key)
-        return { ...legendReference, value: props.valueFormatter(value) }
-      })
-      const TooltipComponent = props.customTooltip ?? ChartTooltip
-      createApp(TooltipComponent, { title: d[props.index], data: omittedData }).mount(componentDiv)
-      wm.set(d, componentDiv.innerHTML)
-      return componentDiv.innerHTML
-    }
+
+    const componentDiv = document.createElement('div')
+    const omittedData = Object.entries(omit(d, [props.index])).map(([key, value]) => {
+      const legendReference = props.items?.find(i => i.name === key)
+      return { ...legendReference, value: props.valueFormatter(Number(value)) }
+    })
+    const TooltipComponent = props.customTooltip ?? ChartTooltip
+    createApp(TooltipComponent, { title: String(d[props.index]), data: omittedData }).mount(componentDiv)
+    wm.set(d, componentDiv.innerHTML)
+    return componentDiv.innerHTML
   }
 
-  else {
-    const data = d.data
+  // fallback to nested data
+  const data = d?.data
+  if (!data)
+    return ''
 
-    if (wm.has(data)) {
-      return wm.get(data)
-    }
-    else {
-      const style = getComputedStyle(elements[i])
-      const omittedData = [{ name: data.name, value: props.valueFormatter(data[props.index]), color: style.fill }]
-      const componentDiv = document.createElement('div')
-      const TooltipComponent = props.customTooltip ?? ChartTooltip
-      createApp(TooltipComponent, { title: d[props.index], data: omittedData }).mount(componentDiv)
-      wm.set(d, componentDiv.innerHTML)
-      return componentDiv.innerHTML
-    }
-  }
+  if (wm.has(data))
+    return wm.get(data)
+
+  const el = elements?.[i]
+  const style = el ? getComputedStyle(el as Element) : { fill: undefined }
+  const omittedData = [{ name: data.name, value: props.valueFormatter(Number(data?.[props.index])), color: (style as any).fill }]
+  const componentDiv = document.createElement('div')
+  const TooltipComponent = props.customTooltip ?? ChartTooltip
+  createApp(TooltipComponent, { title: String(d?.[props.index] ?? ''), data: omittedData }).mount(componentDiv)
+  wm.set(d, componentDiv.innerHTML)
+  return componentDiv.innerHTML
 }
 </script>
 

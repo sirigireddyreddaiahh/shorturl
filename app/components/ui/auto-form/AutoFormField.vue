@@ -16,21 +16,31 @@ function isValidConfig(config: any): config is ConfigItem {
 }
 
 const delegatedProps = computed(() => {
-  if (['ZodObject', 'ZodArray'].includes(props.shape?.type))
+  if (['ZodObject', 'ZodArray'].includes(props.shape?.type as string))
     return { schema: props.shape?.schema }
   return undefined
 })
 
 const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(props.fieldName)
+
+// Compute the component to render so template expressions are simple and
+// avoid index-access on possibly undefined values.
+const selectedComponent = computed(() => {
+  if (isValidConfig(props.config)) {
+    return typeof props.config.component === 'string'
+      ? INPUT_COMPONENTS[props.config.component as keyof typeof INPUT_COMPONENTS]
+      : props.config.component
+  }
+
+  const handlerKey = (props.shape?.type ?? '') as keyof typeof DEFAULT_ZOD_HANDLERS
+  const mapped = DEFAULT_ZOD_HANDLERS[handlerKey]
+  return INPUT_COMPONENTS[mapped as keyof typeof INPUT_COMPONENTS]
+})
 </script>
 
 <template>
   <component
-    :is="isValidConfig(config)
-      ? typeof config.component === 'string'
-        ? INPUT_COMPONENTS[config.component!]
-        : config.component
-      : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
+    :is="selectedComponent"
     v-if="!isHidden"
     :field-name="fieldName"
     :label="shape.schema?.description"

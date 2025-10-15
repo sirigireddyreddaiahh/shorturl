@@ -9,8 +9,8 @@ export default eventHandler(async (event) => {
   const { AI } = cloudflare.env
 
   if (AI) {
-    const { aiPrompt, aiModel } = useRuntimeConfig(event)
-    const { slugRegex } = useAppConfig(event)
+  const { aiPrompt, aiModel } = useRuntimeConfig(event)
+  const { slugRegex } = useAppConfig()
     const messages = [
       { role: 'system', content: aiPrompt.replace('{slugRegex}', slugRegex.toString()) },
 

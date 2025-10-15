@@ -8,7 +8,7 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 nuxt build",
+  "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 nuxt build",
     "build:map": "node scripts/build-map.js",
     "build:colo": "node scripts/build-colo.js",
     "postinstall": "npm run build:map && nuxt prepare",
@@ -74,7 +74,8 @@
     "tailwindcss-animate": "^1.0.7",
     "vitest": "^3.1.4",
     "vue-tsc": "^2.2.10",
-    "wrangler": "^4.16.1"
+    "wrangler": "^4.16.1",
+    "cross-env": "^7.0.3"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint-staged"
