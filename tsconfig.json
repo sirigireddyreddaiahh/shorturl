@@ -2,6 +2,10 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["@cloudflare/vitest-pool-workers"]
+    // Avoid pulling in many implicit ambient type libraries and
+    // reduce third-party type check noise during CI builds.
+    // If you need the Cloudflare vitest types locally for tests,
+    // add them to a test-only tsconfig or install/update devDependencies.
+    "skipLibCheck": true
   }
 }

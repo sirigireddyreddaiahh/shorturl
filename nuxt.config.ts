@@ -3,6 +3,8 @@ import { currentLocales } from './i18n/i18n'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // Target recent Cloudflare/Nitro behavior to avoid extra compatibility transforms
+  compatibilityDate: '2025-10-14',
   modules: [
     '@nuxthub/core',
     'shadcn-nuxt',
@@ -89,6 +91,23 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  // Vite build tuning to reduce single large bundle sizes
+  vite: {
+    build: {
+      // allow larger chunks warning threshold, but better to split large libs
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            globe: ['globe.gl'],
+            charts: ['@unovis/vue', '@unovis/ts'],
+            d3: ['d3-scale', 'd3-scale-chromatic']
+          }
+        }
+      }
+    }
   },
 
   hub: {
