@@ -7,6 +7,13 @@ const slugDefaultLength = +useRuntimeConfig().public.slugDefaultLength
 
 export const nanoid = (length: number = slugDefaultLength) => customAlphabet('23456789abcdefghjkmnpqrstuvwxyz', length)
 
+// Owner schema for multi-user support
+export const OwnerSchema = z.object({
+  sub: z.string(),
+  email: z.string().email(),
+  name: z.string().optional(),
+})
+
 export const LinkSchema = z.object({
   id: z.string().trim().max(26).default(nanoid(10)),
   url: z.string().trim().url().max(2048),
@@ -21,4 +28,5 @@ export const LinkSchema = z.object({
   title: z.string().trim().max(2048).optional(),
   description: z.string().trim().max(2048).optional(),
   image: z.string().trim().url().max(2048).optional(),
+  owner: OwnerSchema.optional(), // Add owner field
 })
