@@ -2,16 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sink",
   "pages_build_output_dir": "dist",
-  "main": "dist/server/index.mjs",
-  "assets": {
-    "binding": "PUBLIC_ASSETS",
-    "directory": "dist/public"
-  },
+  // ...removed unsupported keys for Pages...
   "compatibility_date": "2025-05-08",
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "keep_vars": true,
+  // ...removed unsupported key for Pages...
   "upload_source_maps": true,
   "ai": {
     "binding": "AI"
