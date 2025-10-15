@@ -28,8 +28,8 @@ export default eventHandler((event) => {
       })
     }
 
-    const cookies = parseCookies(cookieHeader)
-    const token = cookies?.SESSION
+  const cookies = parseCookies(cookieHeader)
+  const token = cookies?.SESSION
 
     if (!token) {
       throw createError({ 
@@ -68,8 +68,9 @@ function parseCookies(cookieHeader: string): Record<string, string> {
 
     return Object.fromEntries(
       cookieHeader.split(';').map((cookie: string) => {
-        const [key, ...rest] = cookie.split('=')
-        return [key.trim(), decodeURIComponent(rest.join('=').trim())]
+        const [rawKey, ...rest] = cookie.split('=')
+        const key = (rawKey ?? '').trim()
+        return [key, decodeURIComponent(rest.join('=').trim())]
       })
     )
   }

@@ -31,15 +31,14 @@ export function verifySession(token: string, secret: string) {
     }
 
     const [payload, sig] = parts
-    const expected = createHmac('sha256', secret).update(payload).digest('hex')
+    const expected = createHmac('sha256', String(secret)).update(String(payload)).digest('hex')
 
-    if (!timingSafeEqual(sig, expected)) {
+    if (!timingSafeEqual(String(sig), expected)) {
       console.error('❌ Signature mismatch in session token')
       sessionCache.delete(token) // Remove invalid token from cache
       return null
     }
-
-    const json = Buffer.from(payload, 'base64url').toString('utf-8')
+    const json = Buffer.from(String(payload), 'base64url').toString('utf-8')
     const user = JSON.parse(json)
 
     // Cache the verified session
