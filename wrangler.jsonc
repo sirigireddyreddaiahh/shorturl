@@ -4,7 +4,7 @@
   "pages_build_output_dir": "dist",
   "main": "dist/server/index.mjs",
   "assets": {
-    "binding": "ASSETS",
+    "binding": "PUBLIC_ASSETS",
     "directory": "dist/public"
   },
   "compatibility_date": "2025-05-08",
