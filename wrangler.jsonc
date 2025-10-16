@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sink",
-  "pages_build_output_dir": "dist",
+  "pages_build_output_dir": ".output/public",
   "compatibility_date": "2024-10-01",
   "compatibility_flags": [
     "nodejs_compat"
