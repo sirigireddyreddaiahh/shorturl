@@ -11,15 +11,15 @@
     "binding": "AI"
   },
   "analytics_engine_datasets": [
-    {
-      "binding": "ANALYTICS",
-      "dataset": "urls_anallytics"
-    }
+      {
+        "binding": "ANALYTICS",
+        "dataset": "Url_analytics"
+      }
   ],
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "771d749f8c9a4ec18dbf44a5a760a195"
+      "id": "84bff3dda7e548e8a1f8140cb93e012b"
     }
   ]
 }
