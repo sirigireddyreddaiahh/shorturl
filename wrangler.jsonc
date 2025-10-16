@@ -7,14 +7,11 @@
     "nodejs_compat"
   ],
   "upload_source_maps": true,
-  "ai": {
-    "binding": "AI"
-  },
   "analytics_engine_datasets": [
-      {
-        "binding": "ANALYTICS",
-        "dataset": "Url_analytics"
-      }
+    {
+      "binding": "ANALYTICS",
+      "dataset": "Url_analytics"
+    }
   ],
   "kv_namespaces": [
     {
