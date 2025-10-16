@@ -4,7 +4,7 @@ import { currentLocales } from './i18n/i18n'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Target recent Cloudflare/Nitro behavior to avoid extra compatibility transforms
-  compatibilityDate: '2025-10-14',
+  compatibilityDate: '2024-10-01',
   modules: [
     '@nuxthub/core',
     'shadcn-nuxt',
@@ -32,9 +32,9 @@ export default defineNuxtConfig({
     linkCacheTtl: 60,
     redirectWithQuery: false,
     homeURL: '',
-    cfAccountId: '',
-    cfApiToken: '',
-    dataset: 'sink',
+    cfAccountId: process.env.NUXT_CF_ACCOUNT_ID || '',
+    cfApiToken: process.env.NUXT_CF_API_TOKEN || '',
+    dataset: process.env.NUXT_DATASET || 'urls_anallytics',
     aiModel: '@cf/meta/llama-3.1-8b-instruct',
     aiPrompt: `You are a URL shortening assistant, please shorten the URL provided by the user into a SLUG. The SLUG information must come from the URL itself, do not make any assumptions. A SLUG is human-readable and should not exceed three words and can be validated using regular expressions {slugRegex} . Only the best one is returned, the format must be JSON reference {"slug": "example-slug"}`,
     caseSensitive: false,
@@ -103,11 +103,11 @@ export default defineNuxtConfig({
           manualChunks: {
             globe: ['globe.gl'],
             charts: ['@unovis/vue', '@unovis/ts'],
-            d3: ['d3-scale', 'd3-scale-chromatic']
-          }
-        }
-      }
-    }
+            d3: ['d3-scale', 'd3-scale-chromatic'],
+          },
+        },
+      },
+    },
   },
 
   hub: {
@@ -117,7 +117,7 @@ export default defineNuxtConfig({
     cache: false,
     database: false,
     kv: true,
-    workers: provider !== 'cloudflare_pages',
+    workers: true,
   },
 
   eslint: {

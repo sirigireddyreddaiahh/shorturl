@@ -2,19 +2,17 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sink",
   "pages_build_output_dir": "dist",
-  // ...removed unsupported keys for Pages...
-  "compatibility_date": "2025-05-08",
+  "compatibility_date": "2024-10-01",
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  // ...removed unsupported key for Pages...
   "upload_source_maps": true,
   "ai": {
     "binding": "AI"
   },
   "analytics_engine_datasets": [
     {
-      "binding": "Analytics-engine",
+      "binding": "ANALYTICS",
       "dataset": "urls_anallytics"
     }
   ],
