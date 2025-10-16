@@ -109,6 +109,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  
 
   hub: {
     ai: true,
@@ -117,7 +118,7 @@ export default defineNuxtConfig({
     cache: false,
     database: false,
     kv: true,
-    workers: true,
+    workers: false,
   },
 
   eslint: {
