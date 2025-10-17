@@ -1,22 +1,25 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "shorturl",
+  "name": "urlsclickearn",
+  "main": "dist/server/index.mjs",
+  "assets": {
+    "binding": "PUBLIC_ASSETS",
+    "directory": "dist"
+  },
   "pages_build_output_dir": "dist",
-  "compatibility_date": "2024-10-01",
+  "compatibility_date": "2025-09-12",
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "keep_vars": true,
   "upload_source_maps": true,
-  "analytics_engine_datasets": [
-    {
-      "binding": "ANALYTICS",
-      "dataset": "Url_analytics"
-    }
-  ],
+  "ai": {
+    "binding": "AI"
+  },
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "84bff3dda7e548e8a1f8140cb93e012b"
+      "id": "5aac05d5e58f4728ae7912cd5910f650"
     }
   ]
 }
